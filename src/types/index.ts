@@ -4,6 +4,7 @@ export const userSchema = z.object({
   id: z.number(),
   name: z.string(),
   email: z.string().email(),
+  username: z.string(),
 });
 
 export const editUserSchema = userSchema.partial();
