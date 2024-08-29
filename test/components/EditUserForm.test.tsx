@@ -1,20 +1,26 @@
 import React from "react";
-import { describe, it, expect, vi } from "vitest";
+import { describe, it, expect, vi, beforeEach } from "vitest";
 import { render, screen, waitFor } from "@testing-library/react";
-import CreateUserForm from "../../src/components/CreateUserForm";
 import userEvent from "@testing-library/user-event";
+import EditUserForm from "../../src/components/EditUserForm";
 
 import "@testing-library/jest-dom";
 
-describe("Create User Form", () => {
-  const props = {
-    submitFn: vi.fn(),
+describe("EditUserForm", () => {
+  const mockProps = {
     onClose: vi.fn(),
+    submitFn: vi.fn(),
+    id: 1,
+    name: "",
+    username: "",
+    email: "",
   };
 
-  it("renders fields correctly", () => {
-    render(<CreateUserForm {...props} />);
+  beforeEach(() => {
+    render(<EditUserForm {...mockProps} />);
+  });
 
+  it("renders fields correctly", () => {
     expect(
       screen.getByRole("textbox", { name: "Full Name" }),
     ).toBeInTheDocument();
@@ -26,8 +32,6 @@ describe("Create User Form", () => {
   });
 
   it("have correct value when typed into", async () => {
-    render(<CreateUserForm {...props} />);
-
     const user = userEvent.setup();
     await user.type(
       screen.getByRole("textbox", { name: "Full Name" }),
@@ -54,8 +58,6 @@ describe("Create User Form", () => {
   });
 
   it("passing the correct value when submitted", async () => {
-    render(<CreateUserForm {...props} />);
-
     const user = userEvent.setup();
     await user.type(
       screen.getByRole("textbox", { name: "Full Name" }),
@@ -73,7 +75,7 @@ describe("Create User Form", () => {
     await user.click(screen.getByRole("button", { name: "Submit" }));
 
     await waitFor(() => {
-      expect(props.submitFn).toHaveBeenCalledWith({
+      expect(mockProps.submitFn).toHaveBeenCalledWith(mockProps.id, {
         username: "mootjeman00",
         email: "mootjeman@sapi.com",
         name: "mootjeman",
@@ -81,15 +83,23 @@ describe("Create User Form", () => {
     });
   });
 
-  it("have error when not properly filled when submitted", async () => {
-    render(<CreateUserForm {...props} />);
-
+  it("have error when the fields not properly filled when submitted (at least one field is submitted)", async () => {
     const user = userEvent.setup();
+
+    await user.type(
+      screen.getByRole("textbox", { name: "Email" }),
+      "mootjeman@sapi.com",
+    );
+
+    await user.type(
+      screen.getByRole("textbox", { name: "Username" }),
+      "mootjeman00",
+    );
 
     await user.click(screen.getByRole("button", { name: "Submit" }));
 
-    expect(await screen.findByText(/Invalid Email/i)).toBeInTheDocument();
-    const nameAndUsernameErrors = await screen.findAllByText(/String must/i);
-    expect(nameAndUsernameErrors.length).to.be.eq(2);
+    const nameOrUsernameErrors = await screen.findAllByText(/String must/i);
+    screen.debug(nameOrUsernameErrors);
+    expect(nameOrUsernameErrors.length).to.be.eq(1);
   });
 });
