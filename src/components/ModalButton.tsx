@@ -1,3 +1,4 @@
+import React, { useState, ReactNode } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -8,24 +9,25 @@ import {
   DialogDescription,
 } from "@/components/ui/dialog";
 import { cn } from "@/lib/utils";
-import { ReactNode, useState, FC } from "react";
 
-type ModalButtonProps = {
-  children: ReactNode;
+interface ModalButtonProps {
+  children: (props: { close: () => void }) => ReactNode;
   buttonTitle: string;
   dialogTitle: string;
   dialogDescription: string;
   className?: string;
-};
+}
 
-const ModalButton: FC<ModalButtonProps> = ({
+const ModalButton: React.FC<ModalButtonProps> = ({
   children,
   buttonTitle,
   dialogTitle,
   dialogDescription,
   className,
-}: ModalButtonProps) => {
+}) => {
   const [open, setOpen] = useState(false);
+
+  const closeDialog = () => setOpen(false);
 
   return (
     <>
@@ -39,7 +41,7 @@ const ModalButton: FC<ModalButtonProps> = ({
               <DialogTitle>{dialogTitle}</DialogTitle>
               <DialogDescription>{dialogDescription}</DialogDescription>
             </DialogHeader>
-            {children}
+            {children({ close: closeDialog })}
           </DialogContent>
         </Dialog>
       </div>

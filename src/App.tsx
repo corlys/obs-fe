@@ -1,3 +1,4 @@
+import React from "react";
 import { useUserContext } from "@/hooks/useUserContext";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
@@ -5,9 +6,11 @@ import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import ModalButton from "@/components/ModalButton";
 import CreateUserForm from "@/components/CreateUserForm";
 import EditUserForm from "@/components/EditUserForm";
+import UserDetails from "@/components/UserDetails";
 
-function App() {
+const App: React.FC = () => {
   const { users, deleteUser, addUser, editUser } = useUserContext();
+
   return (
     <>
       <div className="min-h-screen font-poppins">
@@ -19,10 +22,12 @@ function App() {
           <ModalButton
             className="mb-5 self-end"
             buttonTitle="Create User"
-            dialogDescription="Please fil out this user form"
+            dialogDescription="Please fill out this user form"
             dialogTitle="Create User"
           >
-            <CreateUserForm submitFn={addUser} />
+            {({ close }) => (
+              <CreateUserForm submitFn={addUser} onClose={close} />
+            )}
           </ModalButton>
           <div className="flex flex-col gap-6 w-full">
             {users.map((item) => (
@@ -36,7 +41,7 @@ function App() {
                       />
                       <AvatarFallback>AV</AvatarFallback>
                     </Avatar>
-                    <div className="flex flex-col gap 2">
+                    <div className="flex flex-col gap-2">
                       <h2 className="text-lg">{item.name}</h2>
                       <h3 className="text-sm">@{item.username}</h3>
                     </div>
@@ -44,23 +49,40 @@ function App() {
                 </CardHeader>
                 <CardContent>
                   <div className="flex flex-row justify-end items-center gap-4">
-                    <Button variant={"link"}>Details</Button>
                     <ModalButton
-                      buttonTitle="edit"
+                      buttonTitle="Details"
+                      dialogDescription="User Details"
+                      dialogTitle={`${item.name}'s Details`}
+                    >
+                      {({ close }) => (
+                        <UserDetails
+                          id={item.id}
+                          name={item.name}
+                          username={item.username}
+                          email={item.email}
+                          onClose={close}
+                        />
+                      )}
+                    </ModalButton>
+                    <ModalButton
+                      buttonTitle="Edit"
                       dialogDescription="Please edit this user"
                       dialogTitle="Edit User"
                     >
-                      <EditUserForm
-                        submitFn={editUser}
-                        id={item.id}
-                        name={item.name}
-                        username={item.username}
-                        email={item.email}
-                      />
+                      {({ close }) => (
+                        <EditUserForm
+                          submitFn={editUser}
+                          id={item.id}
+                          name={item.name}
+                          username={item.username}
+                          email={item.email}
+                          onClose={close}
+                        />
+                      )}
                     </ModalButton>
                     <Button
                       onClick={() => deleteUser(item.id)}
-                      variant={"destructive"}
+                      variant="destructive"
                     >
                       Delete
                     </Button>
@@ -73,6 +95,6 @@ function App() {
       </div>
     </>
   );
-}
+};
 
 export default App;

@@ -1,8 +1,8 @@
+import React from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { userFormSchema, CreateUser } from "@/types";
 import { cn } from "@/lib/utils";
-
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -15,12 +15,17 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 
-type FormProps = {
+interface CreateUserFormProps {
   className?: string;
   submitFn: (value: CreateUser) => void;
-};
+  onClose: () => void;
+}
 
-const CreateUserForm = ({ className, submitFn }: FormProps) => {
+const CreateUserForm: React.FC<CreateUserFormProps> = ({
+  className,
+  submitFn,
+  onClose,
+}) => {
   const form = useForm<CreateUser>({
     resolver: zodResolver(userFormSchema),
     defaultValues: {
@@ -32,6 +37,7 @@ const CreateUserForm = ({ className, submitFn }: FormProps) => {
 
   const onSubmit = (values: CreateUser) => {
     submitFn(values);
+    onClose();
   };
 
   return (
@@ -78,7 +84,7 @@ const CreateUserForm = ({ className, submitFn }: FormProps) => {
             name="email"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Username</FormLabel>
+                <FormLabel>Email</FormLabel>
                 <FormControl>
                   <Input type="email" placeholder="email" {...field} />
                 </FormControl>

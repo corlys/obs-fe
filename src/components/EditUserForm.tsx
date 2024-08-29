@@ -1,8 +1,8 @@
+import React from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { editUserFormSchema, EditUser } from "@/types";
 import { cn } from "@/lib/utils";
-
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -15,23 +15,25 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 
-type FormProps = {
+interface EditUserFormProps {
   className?: string;
   id: number;
   username: string;
   name: string;
   email: string;
   submitFn: (id: number, values: EditUser) => void;
-};
+  onClose: () => void;
+}
 
-const EditUserForm = ({
+const EditUserForm: React.FC<EditUserFormProps> = ({
   submitFn,
   className,
   id,
   name,
   username,
   email,
-}: FormProps) => {
+  onClose,
+}) => {
   const form = useForm<EditUser>({
     resolver: zodResolver(editUserFormSchema),
     defaultValues: {
@@ -43,6 +45,7 @@ const EditUserForm = ({
 
   const onSubmit = (values: EditUser) => {
     submitFn(id, values);
+    onClose();
   };
 
   return (
@@ -89,7 +92,7 @@ const EditUserForm = ({
             name="email"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Username</FormLabel>
+                <FormLabel>Email</FormLabel>
                 <FormControl>
                   <Input type="email" placeholder="email" {...field} />
                 </FormControl>
