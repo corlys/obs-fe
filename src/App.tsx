@@ -2,6 +2,8 @@ import { useUserContext } from "@/hooks/useUserContext";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
+import ModalButton from "@/components/ModalButton";
+import CreateUserForm from "./components/CreateUserForm";
 
 function App() {
   const { users, deleteUser } = useUserContext();
@@ -13,6 +15,14 @@ function App() {
           <h3>Linkedin</h3>
         </nav>
         <div className="container max-w-4xl mx-auto flex flex-col items-center mb-10">
+          <ModalButton
+            className="mb-5 self-end"
+            buttonTitle="Create User"
+            dialogDescription="Please fil out this user form"
+            dialogTitle="Create User"
+          >
+            <CreateUserForm />
+          </ModalButton>
           <div className="flex flex-col gap-6 w-full">
             {users.map((item) => (
               <Card key={item.id}>
@@ -33,6 +43,12 @@ function App() {
                 </CardHeader>
                 <CardContent>
                   <div className="flex flex-row justify-end items-center gap-4">
+                    <Button variant={"link"}>Details</Button>
+                    <ModalButton
+                      buttonTitle="edit"
+                      dialogDescription="Please edit this user"
+                      dialogTitle="Edit User"
+                    ></ModalButton>
                     <Button
                       onClick={() => deleteUser(item.id)}
                       variant={"destructive"}

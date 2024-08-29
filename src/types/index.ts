@@ -7,10 +7,12 @@ export const userSchema = z.object({
   username: z.string(),
 });
 
-export const editUserSchema = userSchema.partial();
+export const userFormSchema = userSchema.omit({ id: true });
+export const editUserFormSchema = userFormSchema.partial();
 
 export type User = z.infer<typeof userSchema>;
-export type EditUser = z.infer<typeof editUserSchema>;
+export type CreateUser = z.infer<typeof userFormSchema>;
+export type EditUser = z.infer<typeof editUserFormSchema>;
 
 // export interface User {
 //  id: number;
