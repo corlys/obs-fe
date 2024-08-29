@@ -101,7 +101,11 @@ const EditUserForm: React.FC<EditUserFormProps> = ({
               </FormItem>
             )}
           />
-          <Button type="submit">Submit</Button>
+          <div className="flex flex-col items-end">
+            <Button className="" type="submit">
+              Submit
+            </Button>
+          </div>
         </form>
       </Form>
     </>

@@ -93,7 +93,11 @@ const CreateUserForm: React.FC<CreateUserFormProps> = ({
               </FormItem>
             )}
           />
-          <Button type="submit">Submit</Button>
+          <div className="flex flex-col items-end">
+            <Button className="" type="submit">
+              Submit
+            </Button>
+          </div>
         </form>
       </Form>
     </>

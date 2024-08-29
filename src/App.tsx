@@ -15,8 +15,15 @@ const App: React.FC = () => {
     <>
       <div className="min-h-screen font-poppins">
         <nav className="max-w-5xl mx-auto px-10 lg:px-0 flex items-center justify-between my-10">
-          <h3>App</h3>
-          <h3>Linkedin</h3>
+          <a href="/">
+            <h3>App</h3>
+          </a>
+          <a
+            href="https://www.linkedin.com/in/muhammad-naufal-dzakie-783b561a2/"
+            target="_blank"
+          >
+            <h3>Linkedin</h3>
+          </a>
         </nav>
         <div className="container max-w-4xl mx-auto flex flex-col items-center mb-10">
           <ModalButton

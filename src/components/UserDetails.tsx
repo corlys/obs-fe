@@ -40,7 +40,9 @@ const UserDetails: React.FC<UserDetailsProps> = ({
         </div>
       </div>
       <DialogFooter>
-        <Button onClick={onClose}>Close</Button>
+        <Button className="self-end" onClick={onClose}>
+          Close
+        </Button>
       </DialogFooter>
     </div>
   );
