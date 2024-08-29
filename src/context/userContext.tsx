@@ -1,6 +1,6 @@
 import { createContext, FC, ReactNode, useState, useEffect } from "react";
-import { EditUser, User } from "../types";
-import { axiosClient } from "../utils/axios";
+import { EditUser, User } from "@/types";
+import { axiosClient } from "@/lib/utils";
 
 type UserContextType = {
   users: User[];
