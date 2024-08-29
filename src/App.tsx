@@ -3,10 +3,11 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import ModalButton from "@/components/ModalButton";
-import CreateUserForm from "./components/CreateUserForm";
+import CreateUserForm from "@/components/CreateUserForm";
+import EditUserForm from "@/components/EditUserForm";
 
 function App() {
-  const { users, deleteUser } = useUserContext();
+  const { users, deleteUser, addUser, editUser } = useUserContext();
   return (
     <>
       <div className="min-h-screen font-poppins">
@@ -21,7 +22,7 @@ function App() {
             dialogDescription="Please fil out this user form"
             dialogTitle="Create User"
           >
-            <CreateUserForm />
+            <CreateUserForm submitFn={addUser} />
           </ModalButton>
           <div className="flex flex-col gap-6 w-full">
             {users.map((item) => (
@@ -48,7 +49,15 @@ function App() {
                       buttonTitle="edit"
                       dialogDescription="Please edit this user"
                       dialogTitle="Edit User"
-                    ></ModalButton>
+                    >
+                      <EditUserForm
+                        submitFn={editUser}
+                        id={item.id}
+                        name={item.name}
+                        username={item.username}
+                        email={item.email}
+                      />
+                    </ModalButton>
                     <Button
                       onClick={() => deleteUser(item.id)}
                       variant={"destructive"}

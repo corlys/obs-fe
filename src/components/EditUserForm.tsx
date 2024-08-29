@@ -1,6 +1,6 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { userFormSchema, CreateUser } from "@/types";
+import { editUserFormSchema, EditUser } from "@/types";
 import { cn } from "@/lib/utils";
 
 import { Button } from "@/components/ui/button";
@@ -17,21 +17,32 @@ import { Input } from "@/components/ui/input";
 
 type FormProps = {
   className?: string;
-  submitFn: (value: CreateUser) => void;
+  id: number;
+  username: string;
+  name: string;
+  email: string;
+  submitFn: (id: number, values: EditUser) => void;
 };
 
-const CreateUserForm = ({ className, submitFn }: FormProps) => {
-  const form = useForm<CreateUser>({
-    resolver: zodResolver(userFormSchema),
+const EditUserForm = ({
+  submitFn,
+  className,
+  id,
+  name,
+  username,
+  email,
+}: FormProps) => {
+  const form = useForm<EditUser>({
+    resolver: zodResolver(editUserFormSchema),
     defaultValues: {
-      username: "",
-      name: "",
-      email: "",
+      username,
+      name,
+      email,
     },
   });
 
-  const onSubmit = (values: CreateUser) => {
-    submitFn(values);
+  const onSubmit = (values: EditUser) => {
+    submitFn(id, values);
   };
 
   return (
@@ -94,4 +105,4 @@ const CreateUserForm = ({ className, submitFn }: FormProps) => {
   );
 };
 
-export default CreateUserForm;
+export default EditUserForm;

@@ -2,9 +2,9 @@ import { z } from "zod";
 
 export const userSchema = z.object({
   id: z.number(),
-  name: z.string(),
+  name: z.string().min(1),
+  username: z.string().min(1),
   email: z.string().email(),
-  username: z.string(),
 });
 
 export const userFormSchema = userSchema.omit({ id: true });

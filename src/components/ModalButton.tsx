@@ -8,27 +8,29 @@ import {
   DialogDescription,
 } from "@/components/ui/dialog";
 import { cn } from "@/lib/utils";
-import { ReactNode } from "react";
+import { ReactNode, useState, FC } from "react";
 
 type ModalButtonProps = {
-  children?: ReactNode;
+  children: ReactNode;
   buttonTitle: string;
   dialogTitle: string;
   dialogDescription: string;
   className?: string;
 };
 
-const ModalButton = ({
+const ModalButton: FC<ModalButtonProps> = ({
   children,
   buttonTitle,
   dialogTitle,
   dialogDescription,
   className,
 }: ModalButtonProps) => {
+  const [open, setOpen] = useState(false);
+
   return (
     <>
       <div className={cn(className)}>
-        <Dialog>
+        <Dialog open={open} onOpenChange={setOpen}>
           <DialogTrigger asChild>
             <Button>{buttonTitle}</Button>
           </DialogTrigger>
