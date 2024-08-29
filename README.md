@@ -19,5 +19,5 @@ Run the app locally using this command
 pnpm dev --host
 ```
 
-Then you should be able to access it on [HERE](http://localhost:4173)
+Then you should be able to access it on [HERE](http://localhost:3000)
 If not the please refer to the url that is printed on the terminal
