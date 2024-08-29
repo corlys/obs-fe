@@ -1,11 +1,4 @@
-import {
-  createContext,
-  FC,
-  ReactNode,
-  useState,
-  useEffect,
-  useContext,
-} from "react";
+import { createContext, FC, ReactNode, useState, useEffect } from "react";
 import { EditUser, User } from "../types";
 import { axiosClient } from "../utils/axios";
 
@@ -58,11 +51,4 @@ export const UserProvider: FC<{ children: ReactNode }> = ({ children }) => {
       {children}
     </UserContext.Provider>
   );
-};
-
-export const useUserContext = () => {
-  const context = useContext(UserContext);
-  if (context === undefined)
-    throw new Error("Must be called under UserProvider");
-  return context;
 };
