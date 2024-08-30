@@ -1,5 +1,9 @@
 # List User App
 
+## Deployed using Railway at
+
+[LINK DEPLOYED](https://obs-fe-production.up.railway.app)
+
 ## Setup Local Environment
 
 Make sure you have these installed
